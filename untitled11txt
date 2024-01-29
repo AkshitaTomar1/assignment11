@@ -1,0 +1,95 @@
+1. What is the role of the 'else' block in a try-except statement? Provide an example scenario where it would be useful.
+  The 'else' block in a try-except statement is optional and is executed only if the code inside the 'try' block does not raise any           exceptions. It provides a way to specify a block of code that should be executed when there are no exceptions.
+  Example scenario:
+              try:
+                  result = 10 / 2
+              except ZeroDivisionError:
+                  print("Cannot divide by zero!")
+              else:
+                  print("Division successful. Result:", result)
+     In this example, if there is no exception (e.g., no division by zero), the code inside the 'else' block will be executed.
+     
+ 2. Can a try-except block be nested inside another try-except block? Explain with an example.
+    Yes, a try-except block can be nested inside another try-except block. This is useful when you want to handle exceptions at different       levels of granularity.
+    Example:
+           try:
+                # Outer try block
+                num = int(input("Enter a number: "))
+                try:
+                     # Inner try block
+                     result = 10 / num
+                except ZeroDivisionError:
+                      print("Inner: Cannot divide by zero!")
+                else:
+                      print("Inner: Division successful. Result:", result)
+          except ValueError:
+               print("Outer: Please enter a valid number.")
+               
+ 3. How can you create a custom exception class in Python? Provide an example that  demonstrates its usage.
+    To create a custom exception class in Python, you can define a new class that inherits from the built-in Exception class or one of its       subclasses.
+    Example:
+           class CustomError(Exception):
+              def __init__(self, message):
+                  self.message = message
+                  # Usage
+                  try:
+                      raise CustomError("This is a custom exception.")
+                  except CustomError as ce:
+                      print(f"Caught an exception: {ce}")
+   
+ 4. What are some common exceptions that are built-in to Python?
+    Some common built-in exceptions in Python include:
+    SyntaxError: Raised for syntax errors.
+    TypeError: Raised for type-related errors.
+    ValueError: Raised when a function receives an argument of the correct type but with an invalid value.
+    ZeroDivisionError: Raised when division or modulo by zero is encountered.
+    FileNotFoundError: Raised when a file or directory is requested but cannot be found.
+    
+ 5. What is logging in Python, and why is it important in software development?
+    Logging in Python is a built-in module that provides a flexible and powerful way to track events in a program. It is essential for           debugging, monitoring, and analyzing the behavior of an application.
+    
+ 6. Explain the purpose of log levels in Python logging and provide examples of when each log level would be appropriate.
+    Log levels in Python logging represent the severity of an event. Common log levels include:
+    DEBUG: Detailed information for debugging purposes.
+    INFO: General information about the program's operation.
+    WARNING: Indicates a potential issue or something unexpected.
+    ERROR: Indicates a more serious problem.
+    CRITICAL: Indicates a critical error that may lead to program failure.
+    
+ 7. What are log formatters in Python logging, and how can you customise the log message format using formatters?
+   Log formatters in Python logging define the structure of log messages. You can customize the log message format using formatters to          include information like timestamp, log level, module name, etc.
+   
+ 8. How can you set up logging to capture log messages from multiple modules or classes in a Python application?
+   To capture log messages from multiple modules or classes in a Python application, you can configure a root logger and set up logging in      each module or class.
+   
+ 9. What is the difference between the logging and print statements in Python? When should you use logging over print statements in a real-world application?
+   The main difference between logging and print statements is that logging provides a more flexible and configurable way to manage output.     Logging allows you to control the verbosity of messages, direct logs to different outputs, and format log messages.
+   
+ 10. Write a Python program that logs a message to a file named "app.log" with the
+ following requirements:
+ ● Thelogmessage should be "Hello, World!"
+ ● Theloglevel should be set to "INFO."
+ ● Thelogfile should append new log entries without overwriting previous ones.
+  import logging
+
+  logging.basicConfig(filename='app.log', level=logging.INFO, filemode='a')
+
+  logging.info("Hello, World!")
+ 
+ 11. Create a Python program that logs an error message to the console and a file named "errors.log" if an exception occurs during the program's execution. The error message should include the exception type and a timestamp.
+ 
+import logging
+import traceback
+from datetime import datetime
+
+logging.basicConfig(filename='errors.log', level=logging.ERROR, filemode='a')
+
+try:
+    # Code that may raise an exception
+    result = 10 / 0
+except Exception as e:
+    # Log the exception to console and file
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    error_message = f"{timestamp} - Exception: {type(e).__name__}, Message: {str(e)}\n{traceback.format_exc()}"
+    logging.error(error_message)
+    print("An error occurred. Check 'errors.log' for details.")
